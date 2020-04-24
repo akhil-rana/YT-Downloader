@@ -8,10 +8,12 @@ let vformat = null;
 let aformats = [];
 let vformats = [];
 let etitle = null;
+let size = null;
 
 $(document).ready(function () {
   $("#audioSelect, #videoSelect, #start").hide();
   $("#urlSubmit").click(function () {
+    $("#tite").hide(200);
     $("#audioSelect, #videoSelect, #start").hide(200);
     $("#download").hide(200);
     let url = $("#urlInput").val();
@@ -29,6 +31,8 @@ $(document).ready(function () {
         aformats = [...data.aformats];
         console.log(data);
         $(".loading").hide(200);
+        $("#title").html(title);
+        $("#title").show(200);
         selectionMaker(data.vcodecs, data.acodecs);
         $("#audioSelect, #videoSelect, #start").show(300);
       });
@@ -73,17 +77,21 @@ function selectionMaker(vcodecs, acodecs) {
 
 function checkStatus() {
   let interval = setInterval(function () {
-    $.get("https://youtubedl-backend.herokuapp.com/check", function (data) {
-      console.log("data");
-      if(data=='true'){
+    $.post("https://youtubedl-backend.herokuapp.com/check", function (data) {
+      console.log(data);
+      if (data == true) {
         clearInterval(interval);
+        $(".loading").hide(200);
+        $("#download").show(200);
+        $("#download")
+          .parent()
+          .attr(
+            "href",
+            "https://youtubedl-backend.herokuapp.com/download/" +
+              etitle +
+              ".mkv"
+          );
       }
     });
   }, 2000);
-  $(".loading").hide(200, function () {
-    $("#download").show(200);
-    $("#download")
-      .parent()
-      .attr("href", "https://youtubedl-backend.herokuapp.com" + etitle);
-  });
 }
