@@ -20,7 +20,7 @@ $(document).ready(function () {
     if (url != "") {
       let res = { url: url };
       $(".loading").show(200);
-      $.post("https://youtubedl-backend.herokuapp.com/urlstart", res, function (data) {
+      $.post("http://localhost:8081/urlstart", res, function (data) {
         title = data.name;
         etitle = encodeURIComponent(title);
         etitle = escape(etitle);
@@ -49,7 +49,7 @@ $(document).ready(function () {
       console.log(aformat);
       let res = { aurl: aurl, vurl: vurl, vformat: vformat, aformat: aformat };
       console.log(res);
-      $.post("https://youtubedl-backend.herokuapp.com/video", res, function (data) {
+      $.post("http://localhost:8081/video", res, function (data) {
         console.log(data);
         checkStatus();
       });
@@ -75,7 +75,7 @@ function selectionMaker(vcodecs, acodecs) {
 
 function checkStatus() {
   let interval = setInterval(function () {
-    $.post("https://youtubedl-backend.herokuapp.com/check", function (data) {
+    $.post("http://localhost:8081/check", function (data) {
       console.log(data);
       if (data == true) {
         clearInterval(interval);
@@ -85,7 +85,7 @@ function checkStatus() {
           .parent()
           .attr(
             "href",
-            "https://youtubedl-backend.herokuapp.com/download/" + etitle + ".mkv"
+            "http://localhost:8081/download/" + etitle + ".mkv"
           );
       } else if (data == "error") {
         clearInterval(interval);
