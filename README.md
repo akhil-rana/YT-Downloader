@@ -9,4 +9,4 @@ This is the front end appplication for the youtubeDL-backend https://github.com/
 
 
 ## Try Hosted version here:
-http://akhilrana.me/youtubedl
+https://akhil-rana.github.io/YT-Downloader
